@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">foodie</string>
+    <string name="recetas">recetas</string>
+    <string name="match">match</string>
+    <string name="perfil">perfil</string>
+    <string name="buscador_recetas">Buscador de recetas</string>
+    <string name="match_titulo">Match</string>
 </resources>

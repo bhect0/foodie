@@ -14,12 +14,10 @@ public class Recetas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment TODO: documentacion de para que sirve esto
         View view = inflater.inflate(R.layout.recetas, container, false);
-        view.setBackgroundColor(Color.BLUE); // Establecer el color de fondo a azul
 
-        // Mostrar un mensaje en pantalla
-        Toast.makeText(getActivity(), "Recetas", Toast.LENGTH_SHORT).show();
+
 
         return view;
     }

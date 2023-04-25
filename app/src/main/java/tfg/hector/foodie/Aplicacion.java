@@ -33,12 +33,17 @@ public class Aplicacion extends FragmentActivity {
         Button boton2 = findViewById(R.id.boton2);
         Button boton3 = findViewById(R.id.boton3);
 
-        boton1.setOnClickListener(v -> cambiarFragment(recetas));
-        boton2.setOnClickListener(v -> cambiarFragment(match));
-        boton3.setOnClickListener(v -> cambiarFragment(perfil));
+        boton1.setOnClickListener(v -> cambiarFragment(recetas, boton1));
+        boton2.setOnClickListener(v -> cambiarFragment(match, boton2));
+        boton3.setOnClickListener(v -> cambiarFragment(perfil, boton3));
+
+        boton1.setBackgroundResource(R.drawable.boton_borde_superior);
+        boton2.setBackgroundResource(R.drawable.boton_borde_superior);
+        boton3.setBackgroundResource(R.drawable.boton_borde_superior);
     }
 
-    private void cambiarFragment(Fragment fragment) {
+    private void cambiarFragment(Fragment fragment, Button boton) {
+        //boton.setBackgroundResource(R.drawable.boton_borde_superior);
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, fragment).commit();
     }
 

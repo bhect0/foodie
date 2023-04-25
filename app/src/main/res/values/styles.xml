@@ -9,11 +9,10 @@
         <item name="android:textColor">#00FF00</item>
     </style>
 
-    <!--<style name="BotonPersonalizado" parent="@android:style/Widget.Button">
-        <item name="android:background">@drawable/fondo_boton_personalizado</item>
-        <item name="android:textColor">@color/color_texto_boton_personalizado</item>
-        <item name="android:textSize">18sp</item>
-    </style>-->
+    <style name="BotonesPrincipales" parent="Widget.AppCompat.Button">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 
     <style name="RoundedBox">
         <item name="android:shape">rectangle</item>

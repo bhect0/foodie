@@ -20,10 +20,7 @@ public class Match extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.match, container, false);
-        view.setBackgroundColor(Color.BLUE); // Establecer el color de fondo a azul
 
-        // Mostrar un mensaje en pantalla
-        Toast.makeText(getActivity(), "Se muestra el segundo fragmento", Toast.LENGTH_SHORT).show();
 
         return view;
     }

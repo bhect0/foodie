@@ -19,19 +19,35 @@
         <!-- texto para el usuario -->
 
 
-        <!-- texto para la contraseña -->
-        <EditText
-            android:id="@+id/passwordEditText"
+
+        <TextView
+            android:id="@+id/nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/usernameEditText"
             android:layout_marginTop="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:hint="Contraseña"
-            android:inputType="textPassword" />
+            android:text="@string/nombre"
+            />
 
-        <!-- Botón de inicio de sesión -->
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernameEditText"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/email"
+            />
+
+        <Button
+            android:id="@+id/cerrarsesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cerrar_sesion"/>
+
 
 
 

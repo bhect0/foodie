@@ -74,6 +74,27 @@
         android:text="¿Todavía no tienes una cuenta? Regístrate ahora."
         android:textColor="@color/colorPrimario"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/signUpTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/forgotPasswordTextView"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="@string/sign_google"
+
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/google_btn"
+        android:src="@drawable/google"></ImageView>
+
+
     </LinearLayout>
 
 </LinearLayout>

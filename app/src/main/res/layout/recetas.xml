@@ -32,6 +32,13 @@
         android:padding="16dp"
         android:text="Alimentos seleccionados: lechuga, tomate" />
 
+    <TextView
+        android:id="@+id/debug"
+        android:layout_below="@id/alimentos_seleccionados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Vacio" />
 
 
 

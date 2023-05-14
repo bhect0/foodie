@@ -5,4 +5,10 @@
     <string name="perfil">perfil</string>
     <string name="buscador_recetas">Buscador de recetas</string>
     <string name="match_titulo">Match</string>
+    <string name="sign_google">También puedes iniciar sesión con tu cuenta de google</string>
+    <string name="nombre">Profesor</string>
+    <string name="email">profesoramable@gmail.com</string>
+    <string name="cerrar_sesion">cerrar sesión</string>
+    <string name="txtBienvnida">¡Bienvenido a Foodie!</string>
+    <string name="vamos">¡VAMOS!</string>
 </resources>

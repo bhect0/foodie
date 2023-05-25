@@ -11,21 +11,26 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import tfg.hector.foodie.apirest.model.Receta;
 import tfg.hector.foodie.apirest.utils.ApiService;
 import tfg.hector.foodie.apirest.utils.Apis;
 
@@ -48,8 +53,9 @@ public class Recetas extends Fragment {
 
         ApiService as = Apis.getApiRecetas();
         getRecetas(tc_debug, as);
-        return view;
 
+
+        return view;
     }
 
     private void getRecetas(TextView tc_debug, ApiService as) {
@@ -59,10 +65,16 @@ public class Recetas extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject data = response.body();
-                    tc_debug.setText("data: " + data);
+                    //tc_debug.setText("data: " + data);
+                    Gson gson = new Gson();
+                    //Receta listaRecetas = gson.fromJson(data.toString(), Receta.class);
+                    Type listaTipo = new TypeToken<List<Receta>>() {}.getType();
+                    List<Receta> listaRecetas = gson.fromJson(data.toString(), listaTipo);
+
+                    tc_debug.setText(listaRecetas.toString());
                 } else {
-                    tc_debug.setText("error !isSuccessful");
-                    // Maneja la respuesta de error
+                    tc_debug.setText("!isSuccessful");
+                    // error
                 }
             }
 

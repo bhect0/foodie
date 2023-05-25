@@ -1,18 +1,11 @@
 package tfg.hector.foodie.apirest.model;
 
 public class Receta {
-    private int id;
     private String nombre;
 
     private String descripcion;
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId() {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;

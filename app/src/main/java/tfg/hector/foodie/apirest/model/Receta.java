@@ -1,18 +1,26 @@
 package tfg.hector.foodie.apirest.model;
 
-public class Receta {
-    private String nombre;
+import java.util.List;
 
+public class Receta {
+
+    private String titulo;
     private String descripcion;
+    private String foto;
+    private List<String> pasos;
+    private List<String> ingredientes;
+    private String tiempoEstimado;
+
+
 
 
 
     public String getNombre() {
-        return nombre;
+        return titulo;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.titulo = titulo;
     }
 
     public String getDescripcion() {

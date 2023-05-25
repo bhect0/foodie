@@ -1,5 +1,6 @@
 package tfg.hector.foodie.apirest.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -13,8 +14,8 @@ public interface ApiService { // interfaz para consumir el servicio web
     /*@GET("listar/")
     Call<List<Receta>> getRecetas();*/
 
-    String JSON_FILE = "pruebas/recetas.json";
+    String JSON_FILE = "foodie/recetas.json";
 
     @GET(JSON_FILE)
-    Call<JsonObject> getData();
+    Call<JsonArray> getData();
 }

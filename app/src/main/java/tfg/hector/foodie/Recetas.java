@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -133,12 +134,10 @@ public class Recetas extends Fragment {
 
     private void pintaRecetas(List<Receta> recetas) {
         for (Receta receta : recetas) {
-            // Crear una vista para representar la receta (puede ser un CardView, LinearLayout, etc.)
             CardView cardView = new CardView(requireContext());
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cardView.setLayoutParams(layoutParams);
 
-            // Establecer las propiedades del CardView
             cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevation));
             cardView.setRadius(getResources().getDimension(R.dimen.cardview_corner_radius));
             cardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white));
@@ -149,15 +148,19 @@ public class Recetas extends Fragment {
             LinearLayout linearLayout = new LinearLayout(requireContext());
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-            // Crear ImageView y establecer sus atributos
             ImageView imageView = new ImageView(requireContext());
             LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.image_width), getResources().getDimensionPixelSize(R.dimen.image_height));
             imageLayoutParams.gravity = Gravity.CENTER;
             imageView.setLayoutParams(imageLayoutParams);
-            imageView.setImageResource(R.drawable.google);
+            //imageView.setImageResource(R.drawable.google);
             imageView.setContentDescription(getString(R.string.app_name));
 
-            // Crear TextView y establecer sus atributos
+            Picasso.get()
+                    .load(receta.getUrlImagen()) // Aquí debes usar la URL de la imagen de la receta
+                    .placeholder(R.drawable.google) // Opcional: Imagen de relleno mientras se carga la imagen
+                    .error(R.drawable.login_image) // Opcional: Imagen de error si no se puede cargar la imagen
+                    .into(imageView);
+
             TextView textView = new TextView(requireContext());
             LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             textLayoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;

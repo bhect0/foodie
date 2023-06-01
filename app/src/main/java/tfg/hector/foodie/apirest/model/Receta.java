@@ -11,8 +11,9 @@ public class Receta {
     private List<String> ingredientes;
     private String tiempoEstimado;
 
-
-
+    public Receta(String foto) {
+        this.foto = foto;
+    }
 
 
     public String getNombre() {
@@ -31,4 +32,7 @@ public class Receta {
         this.descripcion = descripcion;
     }
 
+    public String getUrlImagen() {
+        return foto;
+    }
 }

@@ -14,7 +14,4 @@ public class ClienteApi {
         return retrofit;
     }
 
-
-    //GitHubService service = retrofit.create(GitHubService.class);
-
 }

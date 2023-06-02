@@ -11,4 +11,5 @@
     <string name="cerrar_sesion">cerrar sesión</string>
     <string name="txtBienvnida">¡Bienvenido a Foodie!</string>
     <string name="vamos">¡VAMOS!</string>
+    <string name="buscar_recetas">Buscar</string>
 </resources>

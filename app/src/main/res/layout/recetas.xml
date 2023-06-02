@@ -40,23 +40,26 @@
 
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <GridLayout
-            android:id="@+id/gridLayout"
+        <LinearLayout
+            android:id="@+id/layoutRecetas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_buscar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="Grid:" />
+                android:enabled="false"
+                android:text="@string/buscar_recetas" />
 
 
 
-        </GridLayout>
+        </LinearLayout>
     </ScrollView>
 
 

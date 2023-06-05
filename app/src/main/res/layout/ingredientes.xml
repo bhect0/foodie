@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/EstiloPrincipal">
+    android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/contenedor_fragments"
+        android:id="@+id/contenedor_fragments_vr"
         android:layout_above="@+id/barra_botones"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
-
+        android:layout_height="wrap_content" />
 
     <!-- Barra de botones tipo tabs -->
     <LinearLayout
@@ -28,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/recetas"
+            android:text="@string/ingredientes"
             style="@style/BotonesPrincipales"/>
 
         <Button
@@ -36,24 +33,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/match"
+            android:text="@string/pasos"
             style="@style/BotonesPrincipales"/>
-
-        <Button
-            android:id="@+id/boton3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/perfil"
-            style="@style/BotonesPrincipales"/>
-
-        <Button
-            android:id="@+id/boton4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            />
-
     </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/layoutIngredientes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

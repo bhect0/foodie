@@ -18,10 +18,16 @@
 
     <!-- Buscador de alimentos -->
     <SearchView
-        android:id="@+id/search_view"
+        android:id="@+id/search_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Buscar alimentos" />
+        android:queryHint="@string/por_titulo" />
+
+    <SearchView
+        android:id="@+id/search_ingredientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="@string/por_ingredientes" />
 
     <!-- Lista de alimentos seleccionados -->
     <TextView
@@ -29,15 +35,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Alimentos seleccionados: lechuga, tomate" />
+        android:text="@string/ingredientes_seleccionados"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/debug"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Vacio" />
+        android:text="Vacio"
+        style="@style/EstiloPrincipal"/>
 
+    <!--<Button
+        android:id="@+id/btn_buscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:enabled="false"
+        android:text="@string/buscar_recetas" />-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -49,23 +64,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
-            <Button
-                android:id="@+id/btn_buscar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:enabled="false"
-                android:text="@string/buscar_recetas" />
+
 
 
 
         </LinearLayout>
     </ScrollView>
-
-
-
-
-
-
 
 </LinearLayout>

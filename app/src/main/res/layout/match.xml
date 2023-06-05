@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical"
+    style="@style/EstiloPrincipal">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/mi_imagen"
+        android:background="@drawable/login_image"
         android:scaleType="fitXY"
         />
 
+    <LinearLayout
+        android:id="@+id/layoutMatch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+/>
     <!--<FrameLayout
         android:id="@+id/myFrameLayout"
         android:layout_width="match_parent"

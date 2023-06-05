@@ -18,6 +18,8 @@ public class Aplicacion extends FragmentActivity {
     private Recetas recetas;
     private Match match;
     private Perfil perfil;
+    private VerReceta verReceta;
+    public static Button boton4;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -30,6 +32,7 @@ public class Aplicacion extends FragmentActivity {
         recetas = new Recetas();
         match = new Match();
         perfil = new Perfil();
+        verReceta = new VerReceta();
 
         // Cargar el fragment inicial en el contenedor
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, recetas).commit();
@@ -38,10 +41,12 @@ public class Aplicacion extends FragmentActivity {
         Button boton1 = findViewById(R.id.boton1);
         Button boton2 = findViewById(R.id.boton2);
         Button boton3 = findViewById(R.id.boton3);
+        boton4 = findViewById(R.id.boton4);
 
-        boton1.setOnClickListener(v -> cambiarFragment(recetas, boton1));
-        boton2.setOnClickListener(v -> cambiarFragment(match, boton2));
-        boton3.setOnClickListener(v -> cambiarFragment(perfil, boton3));
+        boton1.setOnClickListener(v -> cambiarFragment(recetas));
+        boton2.setOnClickListener(v -> cambiarFragment(match));
+        boton3.setOnClickListener(v -> cambiarFragment(perfil));
+        //boton4.setOnClickListener(v -> cambiarFragment(verReceta));
 
         boton1.setBackgroundResource(R.drawable.boton_borde_superior);
         boton2.setBackgroundResource(R.drawable.boton_borde_superior);
@@ -69,8 +74,7 @@ public class Aplicacion extends FragmentActivity {
         });
     }
 
-    private void cambiarFragment(Fragment fragment, Button boton) {
-        //boton.setBackgroundResource(R.drawable.boton_borde_superior);
+    public void cambiarFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, fragment).commit();
     }
 

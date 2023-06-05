@@ -3,7 +3,15 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:textColor">#271f3a</item>
+        <item name="android:background">#FFFFFF</item>
     </style>
+
+    <style name="EstiloPrincipal" parent="android:Widget">
+        <item name="android:textColor">#271f3a</item>
+        <item name="android:background">#FFFFFF</item>
+    </style>
+
 
     <style name="GreenText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">#00FF00</item>
@@ -11,11 +19,13 @@
 
     <style name="BotonesPrincipales" parent="Widget.AppCompat.Button">
         <item name="android:background">#FFFFFF</item>
+        <item name="android:textColor">#271f3a</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="RoundedBox">
         <item name="android:shape">rectangle</item>
+        <item name="android:textColor">#271f3a</item>
         <item name="android:background">#FFFFFF</item>
         <item name="android:radius">16dp</item>
     </style>

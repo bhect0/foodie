@@ -43,9 +43,18 @@ public class Aplicacion extends FragmentActivity {
         Button boton3 = findViewById(R.id.boton3);
         boton4 = findViewById(R.id.boton4);
 
-        boton1.setOnClickListener(v -> cambiarFragment(recetas));
-        boton2.setOnClickListener(v -> cambiarFragment(match));
-        boton3.setOnClickListener(v -> cambiarFragment(perfil));
+        boton1.setOnClickListener(v -> {
+            /*boton1.setBackgroundColor(getResources().getColor(R.color.gris_fondo_activo));
+            boton2.setBackgroundColor(getResources().getColor(R.color.white));
+            boton3.setBackgroundColor(getResources().getColor(R.color.white));*/
+            cambiarFragment(recetas);
+        });
+        boton2.setOnClickListener(v -> {
+            cambiarFragment(match);
+        });
+        boton3.setOnClickListener(v -> {
+            cambiarFragment(perfil);
+        });
         //boton4.setOnClickListener(v -> cambiarFragment(verReceta));
 
         boton1.setBackgroundResource(R.drawable.boton_borde_superior);

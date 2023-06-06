@@ -2,6 +2,7 @@ package tfg.hector.foodie;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -52,6 +53,9 @@ public class Recetas extends Fragment {
     static List<Receta> recetas = new ArrayList<>();
     static Map<String, Receta> recetaris;
 
+    LinearLayout layoutBTitulo;
+    LinearLayout layoutBIngredientes;
+
     SearchView sv_titulo;
     SearchView sv_ingredientes;
     Button btn_buscar;
@@ -63,14 +67,23 @@ public class Recetas extends Fragment {
         View view = inflater.inflate(R.layout.recetas, container, false);
 
         layoutRecetas = view.findViewById(R.id.layoutRecetas);
+        layoutBTitulo = view.findViewById(R.id.layoutBTitulo);
+        layoutBIngredientes = view.findViewById(R.id.layoutBIngredientes);
         sv_titulo = view.findViewById(R.id.search_titulo);
-        sv_ingredientes = view.findViewById(R.id.search_titulo);
-        //btn_buscar = view.findViewById(R.id.btn_buscar);
+        sv_ingredientes = view.findViewById(R.id.search_ingredientes);
+
+        Button b1 = view.findViewById(R.id.boton_titulo);
+        Button b2 = view.findViewById(R.id.boton_ingredientes);
+
+        b1.setOnClickListener(v -> vistaTitulo());
+        b2.setOnClickListener(v -> vistaIngredientes());
+
+        b1.setBackgroundResource(R.drawable.boton_borde_inferior);
+        b2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
         ApiService as = Apis.getApiRecetas();
-        TextView tc_debug = view.findViewById(R.id.debug);
-
-        getRecetas(tc_debug, as);
+        getRecetas(as);
+        //TextView tc_debug = view.findViewById(R.id.debug);
 
         List<String> ingredientes = new ArrayList<>();
         String[] ingredienteu = new String[2];
@@ -102,14 +115,27 @@ public class Recetas extends Fragment {
         sv_titulo.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String searchText) {
-                // Verificar si el SearchView está vacío
                 if (searchText.length() > 3) {
-                    // El SearchView contiene texto, habilitar el botón
                     textoBusqueda = searchText;
                     buscarPorTitulo();
                     Log.d("Titulo:", searchText);
-                } else {
+                }
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+        });
+
+        sv_ingredientes.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextChange(String searchText) {
+                if (searchText.length() > 3) {
+                    textoBusqueda = searchText;
+                    buscarPorIngredientes();
+                    Log.d("Ingrediente:", searchText);
                 }
                 return false;
             }
@@ -127,6 +153,16 @@ public class Recetas extends Fragment {
 
 
         return view;
+    }
+
+    private void vistaIngredientes() {
+        layoutBIngredientes.setVisibility(View.VISIBLE);
+        layoutBTitulo.setVisibility(View.GONE);
+    }
+
+    private void vistaTitulo() {
+        layoutBTitulo.setVisibility(View.VISIBLE);
+        layoutBIngredientes.setVisibility(View.GONE);
     }
 
     private void buscarPorTitulo() {
@@ -152,7 +188,7 @@ public class Recetas extends Fragment {
     }
 
 
-    public Map<String,Receta> getRecetas(TextView tc_debug, ApiService as) {
+    public Map<String,Receta> getRecetas(ApiService as) {
         Call<JsonArray> call = as.getData();
         //recetaris = new ArrayList<>();
         recetaris = new HashMap<>();
@@ -177,18 +213,16 @@ public class Recetas extends Fragment {
                     //pintaRecetas(recetaris.containsKey("Macarrones"));
 
                 } else {
-                    tc_debug.setText("!isSuccessful");
+                    // TODO
                     // error
                 }
             }
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
-                tc_debug.setText(t.getMessage());
+                // TODO
             }
         });
-
-        //devuelve_recetas(response);
 
         return recetaris;
     }
@@ -203,11 +237,6 @@ public class Recetas extends Fragment {
                 pintaReceta(recetaris.get(clave));
             }
         }
-    }
-
-    private void actualizaMapa(Map<String,Receta> recetaris) {
-        //this.recetaris = recetaris;
-        //pintaRecetas(recetaris);
     }
 
     //List<Receta> recetas;
@@ -263,13 +292,17 @@ public class Recetas extends Fragment {
         CardView cardView = new CardView(requireContext());
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         cardView.setLayoutParams(layoutParams);
-
         cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevation));
         cardView.setRadius(getResources().getDimension(R.dimen.cardview_corner_radius));
         cardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white));
         cardView.setMaxCardElevation(getResources().getDimension(R.dimen.cardview_max_elevation));
         cardView.setPreventCornerOverlap(true);
         cardView.setUseCompatPadding(true);
+        cardView.setOnClickListener(v -> {
+            Intent i = new Intent(requireContext(), VerReceta.class);
+            i.putExtra("receta", r);
+            startActivity(i);
+        });
 
         LinearLayout linearLayout = new LinearLayout(requireContext());
         linearLayout.setOrientation(LinearLayout.VERTICAL);

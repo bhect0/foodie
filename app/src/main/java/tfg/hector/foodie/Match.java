@@ -39,7 +39,6 @@ public class Match extends Fragment {
         pintaReceta(siguienteReceta());
 
 
-
         return view;
     }
 

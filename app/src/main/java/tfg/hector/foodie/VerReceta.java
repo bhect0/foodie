@@ -130,8 +130,7 @@ public class VerReceta extends FragmentActivity { // extends fragment
     }
 
     public void pintaPasos(Receta r) {
-        findViewById(R.id.boton1).setBackgroundColor(getResources().getColor(R.color.white));
-        findViewById(R.id.boton2).setBackgroundColor(getResources().getColor(R.color.gris_fondo_activo));
+
         layoutIngredientes.removeAllViews();
         for (String p : r.getPasos()) {
             CardView cardView = new CardView(getApplicationContext());

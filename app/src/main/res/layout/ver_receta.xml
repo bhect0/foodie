@@ -100,7 +100,8 @@
     <LinearLayout
         android:id="@+id/layoutIngredientes_vr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     </LinearLayout>
 </ScrollView>
@@ -110,7 +111,8 @@
     <LinearLayout
         android:id="@+id/layoutPasos_vr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     </LinearLayout>
 </ScrollView>

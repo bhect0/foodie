@@ -3,6 +3,7 @@ package tfg.hector.foodie;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,17 +27,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import tfg.hector.foodie.apirest.model.Receta;
 
 public class VerReceta extends FragmentActivity { // extends fragment
+    public static Receta receta;
     private Ingredientes ingredientes;
     private Pasos pasos;
 
     private LinearLayout layoutPasos;
-    private LinearLayout layoutIngredientes;
+    private static LinearLayout layoutIngredientes;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ver_receta);
+
+        Intent i = getIntent();
+        receta = (Receta) i.getSerializableExtra("receta");
 
         Button boton1 = findViewById(R.id.boton1);
         Button boton2 = findViewById(R.id.boton2);
@@ -52,11 +58,11 @@ public class VerReceta extends FragmentActivity { // extends fragment
         /*boton1.setOnClickListener(v -> cambiarFragment(ingredientes));
         boton2.setOnClickListener(v -> cambiarFragment(pasos));*/
 
-        boton1.setOnClickListener(v -> pintaIngredientes(Recetas.recetaris.get("Macarrones con salsa de tomate")));
-        boton2.setOnClickListener(v -> pintaPasos(Recetas.recetaris.get("Macarrones con salsa de tomate")));
+        boton1.setOnClickListener(v -> pintaIngredientes(receta));
+        boton2.setOnClickListener(v -> pintaPasos(receta));
 
-        boton1.setBackgroundResource(R.drawable.boton_borde_superior);
-        boton2.setBackgroundResource(R.drawable.boton_borde_superior);
+        boton1.setBackgroundResource(R.drawable.boton_borde_inferior);
+        boton2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
 
     }
@@ -73,9 +79,12 @@ public class VerReceta extends FragmentActivity { // extends fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments_vr, fragment).commit();
     }
 
-    private void pintaIngredientes(Receta r) {
+    public void pintaIngredientes(Receta r) {
+        //findViewById(R.id.boton1).setBackgroundColor(getResources().getColor(R.color.gris_fondo_activo));
+        //findViewById(R.id.boton2).setBackgroundColor(getResources().getColor(R.color.white));
         layoutPasos.removeAllViews();
         for (String i : r.getIngredientes()) {
+            Log.d("i: ", i);
             CardView cardView = new CardView(getApplicationContext());
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             cardView.setLayoutParams(layoutParams);
@@ -104,7 +113,7 @@ public class VerReceta extends FragmentActivity { // extends fragment
 
             TextView textView = new TextView(getApplicationContext());
             LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            textLayoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+            textLayoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
             textLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
             textView.setLayoutParams(textLayoutParams);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
@@ -120,7 +129,9 @@ public class VerReceta extends FragmentActivity { // extends fragment
         }
     }
 
-    private void pintaPasos(Receta r) {
+    public void pintaPasos(Receta r) {
+        findViewById(R.id.boton1).setBackgroundColor(getResources().getColor(R.color.white));
+        findViewById(R.id.boton2).setBackgroundColor(getResources().getColor(R.color.gris_fondo_activo));
         layoutIngredientes.removeAllViews();
         for (String p : r.getPasos()) {
             CardView cardView = new CardView(getApplicationContext());

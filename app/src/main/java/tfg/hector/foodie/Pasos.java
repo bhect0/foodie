@@ -35,16 +35,14 @@ public class Pasos extends Fragment {
 
         layoutPasos = view.findViewById(R.id.layoutPasos);
 
-        Button boton1 = view.findViewById(R.id.boton1);
-        Button boton2 = view.findViewById(R.id.boton2);
+        Button boton1 = view.findViewById(R.id.boton5);
+        Button boton2 = view.findViewById(R.id.boton6);
         //boton1.setEnabled(true);
         //boton2.setEnabled(false);
+        pintaPasos(VerReceta.receta);
 
-        boton1.setBackgroundResource(R.drawable.boton_borde_superior);
-        boton2.setBackgroundResource(R.drawable.boton_borde_superior);
-
-        pintaPasos(Recetas.recetaris.get("Macarrones con salsa de tomate"));
-
+        boton1.setBackgroundResource(R.drawable.boton_borde_inferior);
+        boton2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
 
 
@@ -52,6 +50,7 @@ public class Pasos extends Fragment {
     }
 
     private void pintaPasos(Receta r) {
+        layoutPasos.removeAllViews();
         for (String p : r.getPasos()) {
             CardView cardView = new CardView(requireContext());
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

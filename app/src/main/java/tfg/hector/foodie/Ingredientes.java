@@ -31,6 +31,7 @@ import tfg.hector.foodie.apirest.utils.Apis;
 
 public class Ingredientes extends Fragment {
 
+
     private LinearLayout scrollView;
     LinearLayout layoutIngredientes;
     Pasos pasos;
@@ -44,16 +45,14 @@ public class Ingredientes extends Fragment {
 
         layoutIngredientes = view.findViewById(R.id.layoutIngredientes);
 
-        Button boton1 = view.findViewById(R.id.boton1);
-        Button boton2 = view.findViewById(R.id.boton2);
+        Button boton1 = view.findViewById(R.id.boton3);
+        Button boton2 = view.findViewById(R.id.boton4);
         //boton1.setEnabled(false);
         //boton2.setEnabled(true);
+        pintaIngredientes(VerReceta.receta);
 
-        boton1.setBackgroundResource(R.drawable.boton_borde_superior);
-        boton2.setBackgroundResource(R.drawable.boton_borde_superior);
-
-        pintaIngredientes(Recetas.recetaris.get("Macarrones con salsa de tomate"));
-
+        boton1.setBackgroundResource(R.drawable.boton_borde_inferior);
+        boton2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
 
 
@@ -61,6 +60,7 @@ public class Ingredientes extends Fragment {
     }
 
     private void pintaIngredientes(Receta r) {
+        layoutIngredientes.removeAllViews();
         for (String i : r.getIngredientes()) {
             CardView cardView = new CardView(requireContext());
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

@@ -1,8 +1,9 @@
 package tfg.hector.foodie.apirest.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Receta {
+public class Receta implements Serializable {
 
     private String titulo;
     private String descripcion;

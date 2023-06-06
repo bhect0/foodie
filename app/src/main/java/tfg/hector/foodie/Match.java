@@ -36,7 +36,7 @@ public class Match extends Fragment {
 
         layoutMatch = view.findViewById(R.id.layoutMatch);
 
-        pintaReceta(Recetas.recetaris.get("Macarrones con salsa de tomate"));
+        pintaReceta(siguienteReceta());
 
 
 
@@ -125,8 +125,9 @@ public class Match extends Fragment {
         aceptarBtn.setBackgroundColor(Color.WHITE);
         aceptarBtn.setOnClickListener(v -> {
             Intent i = new Intent(requireContext(), VerReceta.class);
+            i.putExtra("receta", r);
             startActivity(i);
-        }); // Aplicacion.boton4.performClick()
+        });
 
         linearLayout.addView(imageView);
         linearLayout.addView(tvTitulo);

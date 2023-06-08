@@ -1,25 +1,18 @@
 package tfg.hector.foodie;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -50,15 +43,17 @@ public class Recetas extends Fragment {
     TextView searchText;
     String textoBusqueda;
     LinearLayout layoutRecetas;
+    LinearLayout layoutIngredientes;
     static List<Receta> recetas = new ArrayList<>();
     static Map<String, Receta> recetaris;
-
+    LinearLayout layoutSelec;
     LinearLayout layoutBTitulo;
     LinearLayout layoutBIngredientes;
-
     SearchView sv_titulo;
     SearchView sv_ingredientes;
     Button btn_buscar;
+    Button btn_anade_ingrediente;
+    TextView i_seleccion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,10 +62,14 @@ public class Recetas extends Fragment {
         View view = inflater.inflate(R.layout.recetas, container, false);
 
         layoutRecetas = view.findViewById(R.id.layoutRecetas);
+        layoutIngredientes = view.findViewById(R.id.layoutIngredientes);
+        layoutSelec = view.findViewById(R.id.layoutSelec);
         layoutBTitulo = view.findViewById(R.id.layoutBTitulo);
         layoutBIngredientes = view.findViewById(R.id.layoutBIngredientes);
         sv_titulo = view.findViewById(R.id.search_titulo);
         sv_ingredientes = view.findViewById(R.id.search_ingredientes);
+        btn_anade_ingrediente = view.findViewById(R.id.btn_anadir);
+        i_seleccion = view.findViewById(R.id.alimentos_seleccionados);
 
         Button b1 = view.findViewById(R.id.boton_titulo);
         Button b2 = view.findViewById(R.id.boton_ingredientes);
@@ -81,6 +80,7 @@ public class Recetas extends Fragment {
         b1.setBackgroundResource(R.drawable.boton_borde_inferior);
         b2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
+        btn_anade_ingrediente.setOnClickListener(v -> anade_ingrediente());
         ApiService as = Apis.getApiRecetas();
         getRecetas(as);
         //TextView tc_debug = view.findViewById(R.id.debug);
@@ -146,51 +146,66 @@ public class Recetas extends Fragment {
             }
         });
 
-        //btn_buscar.setOnClickListener(v -> {
-        //    realizarBusqueda();
-        //});
-
-
-
         return view;
     }
 
+    private void anade_ingrediente() {
+        String ingrediente = sv_ingredientes.getQuery().toString().toLowerCase();
+        i_seleccion.setVisibility(View.VISIBLE);
+        i_seleccion.append(" " + ingrediente);
+        sv_ingredientes.setQuery("", false);
+        sv_ingredientes.clearFocus();
+    }
+
     private void vistaIngredientes() {
+        i_seleccion.setVisibility(View.INVISIBLE);
+        i_seleccion.setText("");
+        sv_ingredientes.setQuery("", false);
+        sv_ingredientes.clearFocus();
         layoutBIngredientes.setVisibility(View.VISIBLE);
         layoutBTitulo.setVisibility(View.GONE);
+        layoutSelec.setVisibility(View.GONE);
     }
 
     private void vistaTitulo() {
         layoutBTitulo.setVisibility(View.VISIBLE);
         layoutBIngredientes.setVisibility(View.GONE);
+        layoutSelec.setVisibility(View.GONE);
+        //layoutSelec.setVisibility();
     }
 
     private void buscarPorTitulo() {
         String textoBusqueda = sv_titulo.getQuery().toString();
-        buscaTitulo(textoBusqueda);
+        layoutRecetas.removeAllViews();
+        layoutIngredientes.removeAllViews();
+        Log.d("Keyset:", recetaris.toString());
+        for (String clave : recetaris.keySet()) {
+            Log.d("Clave:", clave);
+            if (clave.toLowerCase().contains(textoBusqueda.toLowerCase())) {
+                Log.d("Tituloo:", textoBusqueda);
+                pintaReceta(recetaris.get(clave), layoutRecetas);
+            }
+        }
     }
 
     private void buscarPorIngredientes() {
-        String textoBusqueda = sv_titulo.getQuery().toString();
-        buscaTitulo(textoBusqueda);
-    }
-
-    private static List<Receta> buscarRecetasPorIngrediente(String ingrediente, Map<String, Receta> recetas) {
-        List<Receta> recetasEncontradas = new ArrayList<>();
-
-        for (Receta receta : recetas.values()) {
-            //if (receta.getIngredientes().contains(ingrediente)) {
-             //   recetasEncontradas.add(receta);
-            //}
+        String ingrediente = sv_ingredientes.getQuery().toString().toLowerCase();
+        layoutRecetas.removeAllViews();
+        layoutIngredientes.removeAllViews();
+        Log.d("I:", ingrediente);
+        for (Receta r : recetaris.values()) {
+            Log.d("r:", r.toString());
+            List<String> iReceta = r.getIngredientesSeparados();
+            Log.d("fuera if:", iReceta.toString());
+            if (iReceta.contains(ingrediente)) {
+                Log.d("if:", iReceta.toString());
+                pintaReceta(r, layoutIngredientes);
+            }
         }
-
-        return recetasEncontradas;
     }
 
-
-    public Map<String,Receta> getRecetas(ApiService as) {
+    public void getRecetas(ApiService as) {
         Call<JsonArray> call = as.getData();
-        //recetaris = new ArrayList<>();
         recetaris = new HashMap<>();
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -200,18 +215,11 @@ public class Recetas extends Fragment {
                     JsonArray data = response.body().getAsJsonArray();
                     Type recetaListType = new TypeToken<List<Receta>>() {}.getType();
                     recetas.addAll(gson.fromJson(data, recetaListType));
-
                     for (Receta receta : recetas) {
                         Receta r = new Receta(receta.getTitulo(), receta.getDescripcion(), receta.getFoto(), receta.getPasos(), receta.getIngredientes(), receta.getTiempoEstimado());
                         recetaris.put(r.getTitulo(), r);
                     }
-
-
-                    //buscaTitulo("r");
-
-                    //actualizaMapa(recetaris);
-                    //pintaRecetas(recetaris.containsKey("Macarrones"));
-
+                    pintaRecetas(recetaris, layoutSelec);
                 } else {
                     // TODO
                     // error
@@ -223,72 +231,19 @@ public class Recetas extends Fragment {
                 // TODO
             }
         });
-
-        return recetaris;
     }
 
     private void buscaTitulo(String titulo) {
-        layoutRecetas.removeAllViews();
-        Log.d("Keyset:", recetaris.toString());
-        for (String clave : recetaris.keySet()) {
-            Log.d("Clave:", clave);
-            if (clave.toLowerCase().contains(titulo.toLowerCase())) {
-                Log.d("Tituloo:", titulo);
-                pintaReceta(recetaris.get(clave));
-            }
-        }
+
     }
 
-    //List<Receta> recetas;
-    private void pintaRecetas(Map<String, Receta> recetas) {
+    private void pintaRecetas(Map<String, Receta> recetas, LinearLayout layout) {
         for (Receta receta : recetas.values()) {
-            CardView cardView = new CardView(requireContext());
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            cardView.setLayoutParams(layoutParams);
-
-            cardView.setCardElevation(getResources().getDimension(R.dimen.cardview_elevation));
-            cardView.setRadius(getResources().getDimension(R.dimen.cardview_corner_radius));
-            cardView.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white));
-            cardView.setMaxCardElevation(getResources().getDimension(R.dimen.cardview_max_elevation));
-            cardView.setPreventCornerOverlap(true);
-            cardView.setUseCompatPadding(true);
-
-            LinearLayout linearLayout = new LinearLayout(requireContext());
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-            ImageView imageView = new ImageView(requireContext());
-            LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.image_height));
-            imageLayoutParams.gravity = Gravity.CENTER;
-            imageView.setLayoutParams(imageLayoutParams);
-            //imageView.setImageResource(R.drawable.google);
-            imageView.setContentDescription(getString(R.string.app_name));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            Picasso.get()
-                    .load(receta.getFoto())
-                    .error(R.drawable.login_image)
-                    .into(imageView);
-
-            TextView textView = new TextView(requireContext());
-            LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            textLayoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-            textLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
-            textView.setLayoutParams(textLayoutParams);
-            textView.setText(getString(R.string.app_name));
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
-            textView.setTypeface(null, Typeface.BOLD);
-
-            textView.setText(receta.getTitulo());
-
-            linearLayout.addView(imageView);
-            linearLayout.addView(textView);
-            cardView.addView(linearLayout);
-
-            layoutRecetas.addView(cardView);
+            pintaReceta(receta, layout);
         }
     }
 
-    private void pintaReceta(Receta r) {
+    public void pintaReceta(Receta r, LinearLayout layout) {
         CardView cardView = new CardView(requireContext());
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         cardView.setLayoutParams(layoutParams);
@@ -311,7 +266,6 @@ public class Recetas extends Fragment {
         LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.image_height));
         imageLayoutParams.gravity = Gravity.CENTER;
         imageView.setLayoutParams(imageLayoutParams);
-        //imageView.setImageResource(R.drawable.google);
         imageView.setContentDescription(getString(R.string.app_name));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -320,22 +274,43 @@ public class Recetas extends Fragment {
                 .error(R.drawable.login_image)
                 .into(imageView);
 
-        TextView textView = new TextView(requireContext());
+        TextView tvTitulo = new TextView(requireContext());
         LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        textLayoutParams.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        textLayoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
         textLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
-        textView.setLayoutParams(textLayoutParams);
-        textView.setText(getString(R.string.app_name));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
-        textView.setTypeface(null, Typeface.BOLD);
+        tvTitulo.setLayoutParams(textLayoutParams);
+        tvTitulo.setText(getString(R.string.app_name));
+        tvTitulo.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
+        tvTitulo.setTypeface(null, Typeface.BOLD);
+        tvTitulo.setText(r.getTitulo());
 
-        textView.setText(r.getTitulo());
+        TextView tvDesc = new TextView(requireContext());
+        LinearLayout.LayoutParams textLayoutParams_d = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textLayoutParams_d.gravity = Gravity.BOTTOM | Gravity.LEFT;
+        textLayoutParams_d.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
+        tvDesc.setLayoutParams(textLayoutParams_d);
+        tvDesc.setText(getString(R.string.app_name));
+        tvDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
+        tvDesc.setTypeface(null, Typeface.NORMAL);
+        tvDesc.setText(r.getDescripcion());
+
+        TextView tvTE= new TextView(requireContext());
+        LinearLayout.LayoutParams textLayoutParams_t = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textLayoutParams_t.gravity = Gravity.BOTTOM | Gravity.LEFT;
+        textLayoutParams_t.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
+        tvTE.setLayoutParams(textLayoutParams_t);
+        tvTE.setText(getString(R.string.app_name));
+        tvTE.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
+        tvTE.setTypeface(null, Typeface.ITALIC);
+        tvTE.setText(r.getTiempoEstimado());
 
         linearLayout.addView(imageView);
-        linearLayout.addView(textView);
+        linearLayout.addView(tvTitulo);
+        linearLayout.addView(tvDesc);
+        linearLayout.addView(tvTE);
         cardView.addView(linearLayout);
 
-        layoutRecetas.addView(cardView);
+        layout.addView(cardView);
     }
 
 }

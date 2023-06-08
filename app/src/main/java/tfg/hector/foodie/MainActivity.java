@@ -1,14 +1,13 @@
 package tfg.hector.foodie;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -22,6 +21,10 @@ public class MainActivity extends AppCompatActivity { // pantalla de login
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    EditText et_usuario;
+    EditText et_contrasena;
+    Button btn_login;
+    TextView olvido_credenciales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +32,28 @@ public class MainActivity extends AppCompatActivity { // pantalla de login
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        Button btnLogin = findViewById(R.id.loginButton);
-        btnLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(this, Aplicacion.class);
-            startActivity(intent);
+        et_usuario = findViewById(R.id.et_usuario);
+        et_contrasena = findViewById(R.id.et_contrasena);
+
+        btn_login = findViewById(R.id.btn_login);
+        btn_login.setOnClickListener(v -> {
+            if (et_usuario.getText().toString().equals("profesor") &&
+                    et_contrasena.getText().toString().equals("Profesor123")) {
+                Intent intent = new Intent(this, Aplicacion.class);
+                startActivity(intent);
+            } else {
+                olvido_credenciales.performClick();
+            }
         });
 
-        ImageView google_btn = findViewById(R.id.google_btn);
-
+        LinearLayout google_btn = findViewById(R.id.google_btn);
+        olvido_credenciales = findViewById(R.id.olvido_credenciales);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
+
+        olvido_credenciales.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(), "Las creedenciales especiales para profesores son:\n \n Usuario: profesor \n Contraseña: Profesor123", Toast.LENGTH_SHORT).show();
+        });
 
         google_btn.setOnClickListener(v -> {
             signIn();

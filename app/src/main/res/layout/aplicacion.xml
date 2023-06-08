@@ -10,9 +10,8 @@
         android:id="@+id/contenedor_fragments"
         android:layout_above="@+id/barra_botones"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
+        android:layout_height="match_parent"
+        android:paddingTop="3dp"/>
 
 
     <!-- Barra de botones tipo tabs -->
@@ -21,10 +20,80 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <Button
+        <LinearLayout
             android:id="@+id/boton1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            style="@style/BotonesPrincipales">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/recetas_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recetas" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/boton2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            style="@style/BotonesPrincipales">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/match_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/match" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/boton3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            style="@style/BotonesPrincipales">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/perfil_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfil" />
+
+        </LinearLayout>
+
+        <!--<Button
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +115,7 @@
             android:layout_weight="1"
             android:text="@string/perfil"
             style="@style/BotonesPrincipales"/>
-
+-->
         <Button
             android:id="@+id/boton4"
             android:layout_width="0dp"

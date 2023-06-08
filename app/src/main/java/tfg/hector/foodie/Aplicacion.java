@@ -1,8 +1,10 @@
 package tfg.hector.foodie;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -34,25 +36,32 @@ public class Aplicacion extends FragmentActivity {
         perfil = new Perfil();
         verReceta = new VerReceta();
 
-        // Cargar el fragment inicial en el contenedor
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, recetas).commit();
-
         // Configurar los listeners de los botones
-        Button boton1 = findViewById(R.id.boton1);
-        Button boton2 = findViewById(R.id.boton2);
-        Button boton3 = findViewById(R.id.boton3);
+        LinearLayout boton1 = findViewById(R.id.boton1);
+        LinearLayout boton2 = findViewById(R.id.boton2);
+        LinearLayout boton3 = findViewById(R.id.boton3);
         boton4 = findViewById(R.id.boton4);
 
+        // Cargar el fragment inicial en el contenedor
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor_fragments, recetas).commit();
+        //boton1.setTextColor(getResources().getColor(R.color.colorPrimario));
+
         boton1.setOnClickListener(v -> {
-            /*boton1.setBackgroundColor(getResources().getColor(R.color.gris_fondo_activo));
-            boton2.setBackgroundColor(getResources().getColor(R.color.white));
-            boton3.setBackgroundColor(getResources().getColor(R.color.white));*/
+            //boton1.setTextColor(getResources().getColor(R.color.colorPrimario));
+            //boton2.setTextColor(getResources().getColor(R.color.black));
+            //boton3.setTextColor(getResources().getColor(R.color.black));
             cambiarFragment(recetas);
         });
         boton2.setOnClickListener(v -> {
+            //boton2.setTextColor(getResources().getColor(R.color.colorPrimario));
+            //boton1.setTextColor(getResources().getColor(R.color.black));
+            //boton3.setTextColor(getResources().getColor(R.color.black));
             cambiarFragment(match);
         });
         boton3.setOnClickListener(v -> {
+            //boton3.setTextColor(getResources().getColor(R.color.colorPrimario));
+            //boton2.setTextColor(getResources().getColor(R.color.black));
+            //boton1.setTextColor(getResources().getColor(R.color.black));
             cambiarFragment(perfil);
         });
         //boton4.setOnClickListener(v -> cambiarFragment(verReceta));
@@ -68,7 +77,8 @@ public class Aplicacion extends FragmentActivity {
         if (acct != null) {
             String nombreUsuario = acct.getDisplayName();
             String emailUsuario = acct.getEmail();
-            //perfil.setDatosUsuario(nombreUsuario, emailUsuario);
+            Uri fotoUsuario = acct.getPhotoUrl();
+            Perfil.setDatosUsuario(nombreUsuario, emailUsuario, fotoUsuario);
         }
 
         /*btn_cerrar_sesion.setOnClickListener(v -> {
@@ -76,11 +86,9 @@ public class Aplicacion extends FragmentActivity {
         });*/
     }
 
-    private void signOut() {
-        gsc.signOut().addOnCompleteListener(task -> {
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
-        });
+    public void so() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     public void cambiarFragment(Fragment fragment) {

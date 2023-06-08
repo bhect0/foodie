@@ -3,11 +3,11 @@
     <string name="recetas">recetas</string>
     <string name="match">match</string>
     <string name="perfil">perfil</string>
-    <string name="buscador_recetas">Encuentra tu receta ideal</string>
+    <string name="buscador_recetas">Buscador de recetas</string>
     <string name="match_titulo">Match</string>
     <string name="sign_google">También puedes iniciar sesión con tu cuenta de google</string>
     <string name="nombre">Profesor</string>
-    <string name="email">profesoramable@gmail.com</string>
+    <string name="email">profesor@gmail.com</string>
     <string name="cerrar_sesion">cerrar sesión</string>
     <string name="txtBienvnida">¡Bienvenido a Foodie!</string>
     <string name="vamos">¡VAMOS!</string>
@@ -17,4 +17,9 @@
     <string name="ingredientes_seleccionados">Ingredientes seleccionados: </string>
     <string name="ingredientes">ingredientes</string>
     <string name="pasos">pasos</string>
+    <string name="aniadir">Añadir ingrediente</string>
+    <string name="recetas_selec">selección del día</string>
+    <string name="inicia_google">Iniciar sesión con Google</string>
+    <string name="creedenciales">¿Has olvidado tus creedenciales?</string>
+    <string name="inicio_manual">También puedes iniciar sesión con tu usuario y contraseña:</string>
 </resources>

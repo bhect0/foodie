@@ -1,6 +1,7 @@
 package tfg.hector.foodie.apirest.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Receta implements Serializable {
@@ -70,4 +71,13 @@ public class Receta implements Serializable {
         this.tiempo_estimado = tiempo_estimado;
     }
 
+    public List<String> getIngredientesSeparados() {
+        List<String> is = new ArrayList<>();
+        for (String i : ingredientes) {
+            for (String ingrediente : i.split(" ")) {
+                is.add(ingrediente);
+            }
+        }
+        return is;
+    }
 }

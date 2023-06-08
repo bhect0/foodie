@@ -23,6 +23,13 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="BotonesSecundarios" parent="Widget.AppCompat.Button">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textColor">#271f3a</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:radius">16dp</item>
+    </style>
+
     <style name="RoundedBox">
         <item name="android:shape">rectangle</item>
         <item name="android:textColor">#271f3a</item>

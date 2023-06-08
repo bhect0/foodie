@@ -6,6 +6,8 @@
         <stroke
             android:width="2dp"
             android:color="#0077c2" />
+        <padding
+            android:top="3dp"/>
         <solid android:color="@android:color/transparent" />
     </shape>
 </inset>

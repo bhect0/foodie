@@ -11,17 +11,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/login_image"
+        android:layout_marginBottom="20dp"
         android:scaleType="centerCrop" />
 
     <LinearLayout
+        android:id="@+id/google_btn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="16dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/google"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:background="@drawable/bordes_redondeados"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/inicia_google"
+            android:backgroundTint="@color/gris_btn"></TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
         style="@style/EstiloPrincipal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/inicio_manual"></TextView>
     <!-- Campo de texto para el usuario -->
     <EditText
-        android:id="@+id/usernameEditText"
+        android:id="@+id/et_usuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
@@ -29,48 +65,45 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="Usuario"
-        android:textColor="@color/colorPrimario"
         android:inputType="text" />
 
     <!-- Campo de texto para la contraseña -->
     <EditText
-        android:id="@+id/passwordEditText"
+        android:id="@+id/et_contrasena"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/usernameEditText"
+        android:layout_below="@id/et_usuario"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="Contraseña"
-        android:textColor="@color/colorPrimario"
         android:inputType="textPassword"
         />
 
     <!-- Botón de inicio de sesión -->
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordEditText"
+        android:layout_below="@id/et_contrasena"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:text="Iniciar sesión" />
 
-    <!-- Enlace "¿Has olvidado tu contraseña?" -->
     <TextView
-        android:id="@+id/forgotPasswordTextView"
+        android:id="@+id/olvido_credenciales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordEditText"
+        android:layout_below="@id/btn_login"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
-        android:text="¿Has olvidado tu contraseña?"
+        android:text="@string/creedenciales"
         android:textColor="@color/colorPrimario"
         android:textStyle="bold" />
 
     <!-- Enlace "¿Todavía no tienes una cuenta? Regístrate ahora." -->
-    <TextView
+    <!--<TextView
         android:id="@+id/signUpTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,15 +123,8 @@
         android:layout_marginLeft="16dp"
         android:text="@string/sign_google"
 
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_marginTop="15dp"
-        android:id="@+id/google_btn"
-        android:src="@drawable/google"></ImageView>
 
 
     </LinearLayout>

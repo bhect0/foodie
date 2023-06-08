@@ -17,7 +17,8 @@
         android:id="@+id/layoutMatch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:gravity="center_vertical"/>
     <!--<FrameLayout
         android:id="@+id/myFrameLayout"
         android:layout_width="match_parent"

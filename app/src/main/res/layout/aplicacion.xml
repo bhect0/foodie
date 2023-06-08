@@ -24,22 +24,25 @@
         android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/boton1"
+            android:id="@+id/layout1"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             style="@style/BotonesPrincipales">
 
             <ImageButton
+                android:id="@+id/boton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:src="@drawable/recetas_icon" />
 
+
             <TextView
+                android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recetas" />
@@ -47,22 +50,24 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/boton2"
+            android:id="@+id/layout2"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             style="@style/BotonesPrincipales">
 
             <ImageButton
+                android:id="@+id/boton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:src="@drawable/match_icon" />
 
             <TextView
+                android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/match" />
@@ -70,22 +75,24 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/boton3"
+            android:id="@+id/layout3"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             style="@style/BotonesPrincipales">
 
             <ImageButton
+                android:id="@+id/boton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:src="@drawable/perfil_icon" />
 
             <TextView
+                android:id="@+id/tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/perfil" />

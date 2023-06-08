@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity { // pantalla de login
 
         btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(v -> {
-            if (et_usuario.getText().toString().equals("profesor") &&
-                    et_contrasena.getText().toString().equals("Profesor123")) {
+            //if (et_usuario.getText().toString().equals("profesor") &&
+            //        et_contrasena.getText().toString().equals("Profesor123")) {
                 Intent intent = new Intent(this, Aplicacion.class);
                 startActivity(intent);
-            } else {
-                olvido_credenciales.performClick();
-            }
+            //} else {
+            //    olvido_credenciales.performClick();
+            //}
         });
 
         LinearLayout google_btn = findViewById(R.id.google_btn);

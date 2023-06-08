@@ -74,8 +74,16 @@ public class Recetas extends Fragment {
         Button b1 = view.findViewById(R.id.boton_titulo);
         Button b2 = view.findViewById(R.id.boton_ingredientes);
 
-        b1.setOnClickListener(v -> vistaTitulo());
-        b2.setOnClickListener(v -> vistaIngredientes());
+        b1.setOnClickListener(v -> {
+            b1.setTextColor(getResources().getColor(R.color.colorPrimario));
+            b2.setTextColor(getResources().getColor(R.color.black));
+            vistaTitulo();
+        });
+        b2.setOnClickListener(v -> {
+            b2.setTextColor(getResources().getColor(R.color.colorPrimario));
+            b1.setTextColor(getResources().getColor(R.color.black));
+            vistaIngredientes();
+        });
 
         b1.setBackgroundResource(R.drawable.boton_borde_inferior);
         b2.setBackgroundResource(R.drawable.boton_borde_inferior);
@@ -158,6 +166,7 @@ public class Recetas extends Fragment {
     }
 
     private void vistaIngredientes() {
+
         i_seleccion.setVisibility(View.INVISIBLE);
         i_seleccion.setText("");
         sv_ingredientes.setQuery("", false);
@@ -266,7 +275,6 @@ public class Recetas extends Fragment {
         LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.image_height));
         imageLayoutParams.gravity = Gravity.CENTER;
         imageView.setLayoutParams(imageLayoutParams);
-        imageView.setContentDescription(getString(R.string.app_name));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         Picasso.get()
@@ -279,7 +287,6 @@ public class Recetas extends Fragment {
         textLayoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
         textLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
         tvTitulo.setLayoutParams(textLayoutParams);
-        tvTitulo.setText(getString(R.string.app_name));
         tvTitulo.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvTitulo.setTypeface(null, Typeface.BOLD);
         tvTitulo.setText(r.getTitulo());
@@ -289,7 +296,6 @@ public class Recetas extends Fragment {
         textLayoutParams_d.gravity = Gravity.BOTTOM | Gravity.LEFT;
         textLayoutParams_d.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
         tvDesc.setLayoutParams(textLayoutParams_d);
-        tvDesc.setText(getString(R.string.app_name));
         tvDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvDesc.setTypeface(null, Typeface.NORMAL);
         tvDesc.setText(r.getDescripcion());
@@ -299,7 +305,6 @@ public class Recetas extends Fragment {
         textLayoutParams_t.gravity = Gravity.BOTTOM | Gravity.LEFT;
         textLayoutParams_t.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
         tvTE.setLayoutParams(textLayoutParams_t);
-        tvTE.setText(getString(R.string.app_name));
         tvTE.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvTE.setTypeface(null, Typeface.ITALIC);
         tvTE.setText(r.getTiempoEstimado());

@@ -48,13 +48,13 @@ public class Perfil extends Fragment { // extends fragment
     }
 
 
-   /* public static void setDatosUsuario(String nombreUsuario, String emailUsuario, Uri fotoUsuario) {
+   public static void setDatosUsuario(String nombreUsuario, String emailUsuario, Uri fotoUsuario) {
         nombre.setText(nombreUsuario);
         email.setText(emailUsuario);
-        /*Picasso.get()
+        Picasso.get()
                 .load(fotoUsuario)
-                .into(iv_uImagen);*/
-    //}
+                .into(iv_uImagen);
+    }
 
     public void signOut() {
         gsc.signOut().addOnCompleteListener(task -> {

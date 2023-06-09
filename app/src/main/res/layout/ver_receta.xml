@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="10dp"
+        app:cardElevation="5dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="false">
         
@@ -96,27 +96,40 @@
             style="@style/BotonesPrincipales"/>
 
     </LinearLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/layoutIngredientes_vr"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/lv_ingredientes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </ListView>
     </LinearLayout>
-</ScrollView>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:id="@+id/layoutPasos_vr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/lv_pasos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </ListView>
+
+
+
     </LinearLayout>
-</ScrollView>
+
 </LinearLayout>
 

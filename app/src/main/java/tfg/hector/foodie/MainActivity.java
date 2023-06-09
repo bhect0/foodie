@@ -17,6 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity { // pantalla de login
 
     GoogleSignInOptions gso;
@@ -30,7 +32,6 @@ public class MainActivity extends AppCompatActivity { // pantalla de login
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
 
         et_usuario = findViewById(R.id.et_usuario);
         et_contrasena = findViewById(R.id.et_contrasena);

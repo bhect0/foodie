@@ -97,13 +97,13 @@ public class Aplicacion extends FragmentActivity {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         gsc = GoogleSignIn.getClient(this,gso);
 
-        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String nombreUsuario = acct.getDisplayName();
             String emailUsuario = acct.getEmail();
             Uri fotoUsuario = acct.getPhotoUrl();
-            //Perfil.setDatosUsuario(nombreUsuario, emailUsuario, fotoUsuario);
-        }*/
+            Perfil.setDatosUsuario(nombreUsuario, emailUsuario, fotoUsuario);
+        }
 
         /*btn_cerrar_sesion.setOnClickListener(v -> {
             signOut();

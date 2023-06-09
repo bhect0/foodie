@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -58,7 +59,6 @@ public class Recetas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment TODO: documentacion de para que sirve inflate
         View view = inflater.inflate(R.layout.recetas, container, false);
 
         layoutRecetas = view.findViewById(R.id.layoutRecetas);
@@ -88,37 +88,9 @@ public class Recetas extends Fragment {
         b1.setBackgroundResource(R.drawable.boton_borde_inferior);
         b2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
-        btn_anade_ingrediente.setOnClickListener(v -> anade_ingrediente());
+        btn_anade_ingrediente.setOnClickListener(v -> anade_ingrediente(sv_ingredientes.getQuery().toString().toLowerCase()));
         ApiService as = Apis.getApiRecetas();
         getRecetas(as);
-        //TextView tc_debug = view.findViewById(R.id.debug);
-
-        List<String> ingredientes = new ArrayList<>();
-        String[] ingredienteu = new String[2];
-        for (Receta r : recetaris.values()) {
-            for (String i : r.getIngredientes()){
-                ingredientes.add(i);
-            }
-        }
-        /*Curso<String> suggestionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, ingredientes);
-        sv_ingredientes.setSuggestionsAdapter(suggestionAdapter);*/
-        /*@Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.options_menu, menu);
-
-            // Associate searchable configuration with the SearchView
-            SearchManager searchManager =
-                    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView =
-                    (SearchView) menu.findItem(R.id.search).getActionView();
-            searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(getComponentName()));
-
-            return true;
-        }
-
-        sv_ingredientes.createContextMenu(*/
 
         sv_titulo.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -142,8 +114,6 @@ public class Recetas extends Fragment {
             public boolean onQueryTextChange(String searchText) {
                 if (searchText.length() > 3) {
                     textoBusqueda = searchText;
-                    buscarPorIngredientes();
-                    Log.d("Ingrediente:", searchText);
                 }
                 return false;
             }
@@ -157,16 +127,21 @@ public class Recetas extends Fragment {
         return view;
     }
 
-    private void anade_ingrediente() {
-        String ingrediente = sv_ingredientes.getQuery().toString().toLowerCase();
-        i_seleccion.setVisibility(View.VISIBLE);
-        i_seleccion.append(" " + ingrediente);
-        sv_ingredientes.setQuery("", false);
-        sv_ingredientes.clearFocus();
+    private void anade_ingrediente(String ingrediente) {
+        if (ingrediente.length() > 0) {
+            buscarPorIngredientes(ingrediente);
+            i_seleccion.setVisibility(View.VISIBLE);
+            i_seleccion.append(" " + ingrediente);
+            sv_ingredientes.setQuery("", false);
+            sv_ingredientes.clearFocus();
+        } else {
+            Toast.makeText(requireContext(), "Ingrediente no válido", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void vistaIngredientes() {
-
+        sv_ingredientes.onActionViewExpanded();
         i_seleccion.setVisibility(View.INVISIBLE);
         i_seleccion.setText("");
         sv_ingredientes.setQuery("", false);
@@ -177,6 +152,7 @@ public class Recetas extends Fragment {
     }
 
     private void vistaTitulo() {
+        sv_titulo.onActionViewExpanded();
         layoutBTitulo.setVisibility(View.VISIBLE);
         layoutBIngredientes.setVisibility(View.GONE);
         layoutSelec.setVisibility(View.GONE);
@@ -191,17 +167,14 @@ public class Recetas extends Fragment {
         for (String clave : recetaris.keySet()) {
             Log.d("Clave:", clave);
             if (clave.toLowerCase().contains(textoBusqueda.toLowerCase())) {
-                Log.d("Tituloo:", textoBusqueda);
                 pintaReceta(recetaris.get(clave), layoutRecetas);
             }
         }
     }
 
-    private void buscarPorIngredientes() {
-        String ingrediente = sv_ingredientes.getQuery().toString().toLowerCase();
+    private void buscarPorIngredientes(String ingrediente) {
         layoutRecetas.removeAllViews();
         layoutIngredientes.removeAllViews();
-        Log.d("I:", ingrediente);
         for (Receta r : recetaris.values()) {
             Log.d("r:", r.toString());
             List<String> iReceta = r.getIngredientesSeparados();
@@ -240,10 +213,6 @@ public class Recetas extends Fragment {
                 // TODO
             }
         });
-    }
-
-    private void buscaTitulo(String titulo) {
-
     }
 
     private void pintaRecetas(Map<String, Receta> recetas, LinearLayout layout) {
@@ -285,19 +254,21 @@ public class Recetas extends Fragment {
         TextView tvTitulo = new TextView(requireContext());
         LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         textLayoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
-        textLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
+        textLayoutParams.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), 0);
         tvTitulo.setLayoutParams(textLayoutParams);
         tvTitulo.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvTitulo.setTypeface(null, Typeface.BOLD);
+        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
         tvTitulo.setText(r.getTitulo());
 
         TextView tvDesc = new TextView(requireContext());
         LinearLayout.LayoutParams textLayoutParams_d = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         textLayoutParams_d.gravity = Gravity.BOTTOM | Gravity.LEFT;
-        textLayoutParams_d.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), getResources().getDimensionPixelSize(R.dimen.text_margin_bottom));
+        textLayoutParams_d.setMargins(getResources().getDimensionPixelSize(R.dimen.text_margin_left), getResources().getDimensionPixelSize(R.dimen.text_margin_top), getResources().getDimensionPixelSize(R.dimen.text_margin_right), 0);
         tvDesc.setLayoutParams(textLayoutParams_d);
         tvDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvDesc.setTypeface(null, Typeface.NORMAL);
+        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
         tvDesc.setText(r.getDescripcion());
 
         TextView tvTE= new TextView(requireContext());
@@ -307,6 +278,7 @@ public class Recetas extends Fragment {
         tvTE.setLayoutParams(textLayoutParams_t);
         tvTE.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvTE.setTypeface(null, Typeface.ITALIC);
+        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
         tvTE.setText(r.getTiempoEstimado());
 
         linearLayout.addView(imageView);

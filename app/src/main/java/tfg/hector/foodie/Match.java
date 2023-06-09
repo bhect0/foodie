@@ -47,7 +47,7 @@ public class Match extends Fragment {
         Set<String> keys = Recetas.recetaris.keySet();
         String[] keysArray = keys.toArray(new String[0]);
         Random random = new Random();
-        int randomIndex = random.nextInt(keysArray.length);
+        int randomIndex = random. nextInt(keysArray.length);
         return Recetas.recetaris.get(keysArray[randomIndex]);
     }
 

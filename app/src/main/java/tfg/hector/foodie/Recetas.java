@@ -187,30 +187,39 @@ public class Recetas extends Fragment {
     }
 
     public void getRecetas(ApiService as) {
-        Call<JsonArray> call = as.getData();
-        recetaris = new HashMap<>();
-        call.enqueue(new Callback<JsonArray>() {
+        Call<JsonArray> call = as.getData(); // obtenemos el objeto Call
+        recetaris = new HashMap<>(); // inicializamos la variable recetaris previamente declarada a nivel de clase
+        call.enqueue(new Callback<JsonArray>() { // con el método enqueue enviamos la request de forma asíncrona
             @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    JsonArray data = response.body().getAsJsonArray();
-                    Type recetaListType = new TypeToken<List<Receta>>() {}.getType();
-                    recetas.addAll(gson.fromJson(data, recetaListType));
-                    for (Receta receta : recetas) {
-                        Receta r = new Receta(receta.getTitulo(), receta.getDescripcion(), receta.getFoto(), receta.getPasos(), receta.getIngredientes(), receta.getTiempoEstimado());
-                        recetaris.put(r.getTitulo(), r);
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) { /* lo que se encuntra dentro de este
+                                                                                         método se ejecutará cuándo se obtenga una
+                                                                                         http request, la cuál se almacena en el objeto
+                                                                                         Response. */
+                if (response.isSuccessful()) { // se comprueba si la request devuelve un código http de éxito (entre 200 y 300)
+                    Gson gson = new Gson(); // definimos un objeto Gson que posteriormente utilizamos
+                    JsonArray data = response.body().getAsJsonArray(); // obtenemos el contenido de la respuesta como un array de elementos Json
+                    Type recetaListType = new TypeToken<List<Receta>>() {}.getType(); /* sintaxis de la biblioteca Gson. Con esta línea estamos
+                                                                                      indicando que lo que obtenemos del Json son recetas
+                                                                                      y que las queremos guardar en una List de Java. */
+                    recetas.addAll(gson.fromJson(data, recetaListType)); // añadimos las recetas a una lista de recetas
+                    for (Receta receta : recetas) { // recorremos la lista de recetas
+                        Receta r = new Receta(receta.getTitulo(),
+                                receta.getDescripcion(),
+                                receta.getFoto(),
+                                receta.getPasos(),
+                                receta.getIngredientes(),
+                                receta.getTiempoEstimado()); // instanciamos cada una de las recetas
+
+                        recetaris.put(r.getTitulo(), r); // introducimos las recetas en el HashMap<String, Receta> previamente definido
                     }
                     pintaRecetas(recetaris, layoutSelec);
-                } else {
-                    // TODO
-                    // error
                 }
             }
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
-                // TODO
+                Toast.makeText(getContext(), "No se ha podido establecer contacto con el servidor." +
+                        " Inténtelo de nuevo más tarde", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -18,11 +18,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 public class Aplicacion extends FragmentActivity {
 
-    // Fragmentos
+    // Fragments
     private Recetas recetas;
     private Match match;
     private Perfil perfil;
-    private VerReceta verReceta;
+
     public static Button boton4;
 
     GoogleSignInOptions gso;
@@ -36,7 +36,6 @@ public class Aplicacion extends FragmentActivity {
         recetas = new Recetas();
         match = new Match();
         perfil = new Perfil();
-        verReceta = new VerReceta();
 
         ImageButton boton1 = findViewById(R.id.boton1);
         ImageButton boton2 = findViewById(R.id.boton2);

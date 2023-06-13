@@ -22,15 +22,11 @@ import tfg.hector.foodie.apirest.model.Receta;
 
 public class VerReceta extends FragmentActivity { // extends fragment
     public static Receta receta;
-    private ImageView iv_rimagen;
-    private TextView tv_nombre;
-    private TextView tv_descripcion;
-    private TextView tv_tiempo_estimado;
 
     private LinearLayout layoutPasos;
     private ListView lv_ingredientes;
     private ListView lv_pasos;
-    private static LinearLayout layoutIngredientes;
+    private LinearLayout layoutIngredientes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +49,10 @@ public class VerReceta extends FragmentActivity { // extends fragment
         lv_ingredientes = findViewById(R.id.lv_ingredientes);
         lv_pasos = findViewById(R.id.lv_pasos);
 
-        iv_rimagen = findViewById(R.id.iv_rimagen);
-        tv_nombre = findViewById(R.id.tv_nombre);
-        tv_descripcion = findViewById(R.id.tv_descripcion);
-        tv_tiempo_estimado = findViewById(R.id.tv_tiempo_estimado);
+        ImageView iv_rimagen = findViewById(R.id.iv_rimagen);
+        TextView tv_nombre = findViewById(R.id.tv_nombre);
+        TextView tv_descripcion = findViewById(R.id.tv_descripcion);
+        TextView tv_tiempo_estimado = findViewById(R.id.tv_tiempo_estimado);
 
         LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelSize(R.dimen.image_height));
         imageLayoutParams.gravity = Gravity.CENTER;

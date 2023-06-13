@@ -10,4 +10,5 @@
     <color name="gris_fondo_activo">#808080</color>
     <color name="gris_btn">#e6eeff</color>
     <color name="colorPrimario">#2196F3</color>
+    <color name="rojotexto">#A7171A</color>
 </resources>

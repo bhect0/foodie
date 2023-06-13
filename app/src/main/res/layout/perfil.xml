@@ -15,10 +15,10 @@
 
     <ImageView
         android:id="@+id/iv_uImagen"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginTop="-60dp"
-        android:visibility="gone">
+        style="@style/Round"
+        android:layout_marginTop="-60dp">
 
     </ImageView>
 

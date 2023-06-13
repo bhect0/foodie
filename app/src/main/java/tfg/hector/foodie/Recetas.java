@@ -55,6 +55,9 @@ public class Recetas extends Fragment {
     Button btn_buscar;
     Button btn_anade_ingrediente;
     TextView i_seleccion;
+    TextView feedback;
+    List<String> i_buscados = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +73,7 @@ public class Recetas extends Fragment {
         sv_ingredientes = view.findViewById(R.id.search_ingredientes);
         btn_anade_ingrediente = view.findViewById(R.id.btn_anadir);
         i_seleccion = view.findViewById(R.id.alimentos_seleccionados);
+        feedback = view.findViewById(R.id.feedback);
 
         Button b1 = view.findViewById(R.id.boton_titulo);
         Button b2 = view.findViewById(R.id.boton_ingredientes);
@@ -98,7 +102,6 @@ public class Recetas extends Fragment {
                 if (searchText.length() > 3) {
                     textoBusqueda = searchText;
                     buscarPorTitulo();
-                    Log.d("Titulo:", searchText);
                 }
                 return false;
             }
@@ -128,16 +131,15 @@ public class Recetas extends Fragment {
     }
 
     private void anade_ingrediente(String ingrediente) {
-        if (ingrediente.length() > 0) {
-            buscarPorIngredientes(ingrediente);
+        i_buscados.add(ingrediente.trim());
+        if (ingrediente.length() > 0 && buscarPorIngredientes(i_buscados)) {
             i_seleccion.setVisibility(View.VISIBLE);
             i_seleccion.append(" " + ingrediente);
-            sv_ingredientes.setQuery("", false);
             sv_ingredientes.clearFocus();
         } else {
-            Toast.makeText(requireContext(), "Ingrediente no válido", Toast.LENGTH_SHORT).show();
+            feedback.setVisibility(View.VISIBLE);
         }
-
+        sv_ingredientes.setQuery("", false);
     }
 
     private void vistaIngredientes() {
@@ -149,6 +151,8 @@ public class Recetas extends Fragment {
         layoutBIngredientes.setVisibility(View.VISIBLE);
         layoutBTitulo.setVisibility(View.GONE);
         layoutSelec.setVisibility(View.GONE);
+        i_buscados.clear();
+        layoutIngredientes.removeAllViews();
     }
 
     private void vistaTitulo() {
@@ -163,27 +167,26 @@ public class Recetas extends Fragment {
         String textoBusqueda = sv_titulo.getQuery().toString();
         layoutRecetas.removeAllViews();
         layoutIngredientes.removeAllViews();
-        Log.d("Keyset:", recetaris.toString());
         for (String clave : recetaris.keySet()) {
-            Log.d("Clave:", clave);
             if (clave.toLowerCase().contains(textoBusqueda.toLowerCase())) {
                 pintaReceta(recetaris.get(clave), layoutRecetas);
             }
         }
     }
 
-    private void buscarPorIngredientes(String ingrediente) {
+    private boolean buscarPorIngredientes(List<String> i_buscados) {
+        boolean iencontrado = false;
         layoutRecetas.removeAllViews();
         layoutIngredientes.removeAllViews();
         for (Receta r : recetaris.values()) {
-            Log.d("r:", r.toString());
             List<String> iReceta = r.getIngredientesSeparados();
-            Log.d("fuera if:", iReceta.toString());
-            if (iReceta.contains(ingrediente)) {
-                Log.d("if:", iReceta.toString());
+            if (iReceta.containsAll(i_buscados)) {
                 pintaReceta(r, layoutIngredientes);
+                iencontrado = true;
             }
+
         }
+        return iencontrado;
     }
 
     public void getRecetas(ApiService as) {

@@ -12,6 +12,10 @@
         <item name="android:background">#FFFFFF</item>
     </style>
 
+    <style name="Round">
+        <item name="android:background">@drawable/round_background</item>
+    </style>
+
 
     <style name="GreenText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">#00FF00</item>

@@ -23,7 +23,10 @@ public class Aplicacion extends FragmentActivity {
     private Match match;
     private Perfil perfil;
 
-    public static Button boton4;
+    public Button boton4;
+    public static String nombreUsuario;
+    public static String emailUsuario;
+    public static Uri fotoUsuario;
 
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
@@ -98,10 +101,9 @@ public class Aplicacion extends FragmentActivity {
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
-            String nombreUsuario = acct.getDisplayName();
-            String emailUsuario = acct.getEmail();
-            Uri fotoUsuario = acct.getPhotoUrl();
-            Perfil.setDatosUsuario(nombreUsuario, emailUsuario, fotoUsuario);
+            nombreUsuario = acct.getDisplayName();
+            emailUsuario = acct.getEmail();
+            fotoUsuario = acct.getPhotoUrl();
         }
 
         /*btn_cerrar_sesion.setOnClickListener(v -> {

@@ -18,7 +18,7 @@ To install and run Foodie on your Android device, please follow these steps:
 
 Clone this repository to your local machine using the following command:
 
-git clone https://github.com/your-username/foodie.git
+git clone https://github.com/bhect0/foodie.git
 
 1. Open Android Studio and select "Open an Existing Project".
 2. Navigate to the foodie directory and select it.

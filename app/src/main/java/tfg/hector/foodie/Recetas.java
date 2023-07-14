@@ -3,7 +3,6 @@ package tfg.hector.foodie;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +24,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,8 +43,6 @@ import tfg.hector.foodie.apirest.utils.Apis;
 
 public class Recetas extends Fragment {
 
-    private LinearLayout scrollView;
-    TextView searchText;
     String textoBusqueda;
     LinearLayout layoutRecetas;
     LinearLayout layoutIngredientes;
@@ -52,11 +53,14 @@ public class Recetas extends Fragment {
     LinearLayout layoutBIngredientes;
     SearchView sv_titulo;
     SearchView sv_ingredientes;
-    Button btn_buscar;
+    Button btn_nueva_consulta;
     Button btn_anade_ingrediente;
     TextView i_seleccion;
     TextView feedback;
     List<String> i_buscados = new ArrayList<>();
+
+    public Recetas() {
+    }
 
 
     @Override
@@ -72,6 +76,7 @@ public class Recetas extends Fragment {
         sv_titulo = view.findViewById(R.id.search_titulo);
         sv_ingredientes = view.findViewById(R.id.search_ingredientes);
         btn_anade_ingrediente = view.findViewById(R.id.btn_anadir);
+        btn_nueva_consulta = view.findViewById(R.id.btn_nueva_consulta);
         i_seleccion = view.findViewById(R.id.alimentos_seleccionados);
         feedback = view.findViewById(R.id.feedback);
 
@@ -93,8 +98,10 @@ public class Recetas extends Fragment {
         b2.setBackgroundResource(R.drawable.boton_borde_inferior);
 
         btn_anade_ingrediente.setOnClickListener(v -> anade_ingrediente(sv_ingredientes.getQuery().toString().toLowerCase()));
+        btn_nueva_consulta.setOnClickListener(v -> vistaIngredientes());
         ApiService as = Apis.getApiRecetas();
         getRecetas(as);
+
 
         sv_titulo.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -131,15 +138,34 @@ public class Recetas extends Fragment {
     }
 
     private void anade_ingrediente(String ingrediente) {
-        i_buscados.add(ingrediente.trim());
-        if (ingrediente.length() > 0 && buscarPorIngredientes(i_buscados)) {
-            i_seleccion.setVisibility(View.VISIBLE);
-            i_seleccion.append(" " + ingrediente);
-            sv_ingredientes.clearFocus();
+        feedback.setVisibility(View.GONE);
+        if (ingrediente.length() > 2) {
+            if (ingredienteValido(ingrediente)) {
+                i_buscados.add(ingrediente.trim());
+                buscarPorIngredientes(i_buscados);
+                i_seleccion.setVisibility(View.VISIBLE);
+                i_seleccion.append(" " + ingrediente);
+                sv_ingredientes.clearFocus();
+            } else {
+                feedback.setVisibility(View.VISIBLE);
+                feedback.setText(R.string.no_recetas);
+            }
+
         } else {
             feedback.setVisibility(View.VISIBLE);
+            feedback.setText(R.string.introduce_ingrediente);
         }
         sv_ingredientes.setQuery("", false);
+    }
+
+    private boolean ingredienteValido(String ingrediente) {
+        for (Receta r : recetaris.values()) {
+            List<String> iReceta = r.getIngredientesSeparados();
+            if (iReceta.contains(ingrediente)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void vistaIngredientes() {
@@ -153,6 +179,7 @@ public class Recetas extends Fragment {
         layoutSelec.setVisibility(View.GONE);
         i_buscados.clear();
         layoutIngredientes.removeAllViews();
+        feedback.setVisibility(View.GONE);
     }
 
     private void vistaTitulo() {
@@ -174,46 +201,44 @@ public class Recetas extends Fragment {
         }
     }
 
-    private boolean buscarPorIngredientes(List<String> i_buscados) {
-        boolean iencontrado = false;
+    private void buscarPorIngredientes(List<String> i_buscados) {
+        boolean hay_recetas = false;
         layoutRecetas.removeAllViews();
         layoutIngredientes.removeAllViews();
         for (Receta r : recetaris.values()) {
             List<String> iReceta = r.getIngredientesSeparados();
             if (iReceta.containsAll(i_buscados)) {
                 pintaReceta(r, layoutIngredientes);
-                iencontrado = true;
+                hay_recetas = true;
             }
-
         }
-        return iencontrado;
+        if (!hay_recetas) {
+            feedback.setVisibility(View.VISIBLE);
+            feedback.setText(R.string.no_recetas);
+        }
     }
 
     public void getRecetas(ApiService as) {
-        Call<JsonArray> call = as.getData(); // obtenemos el objeto Call
-        recetaris = new HashMap<>(); // inicializamos la variable recetaris previamente declarada a nivel de clase
-        call.enqueue(new Callback<JsonArray>() { // con el método enqueue enviamos la request de forma asíncrona
+        Call<JsonArray> call = as.getData();
+        recetaris = new HashMap<>();
+        call.enqueue(new Callback<JsonArray>() {
             @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) { /* lo que se encuntra dentro de este
-                                                                                         método se ejecutará cuándo se obtenga una
-                                                                                         http request, la cuál se almacena en el objeto
-                                                                                         Response. */
-                if (response.isSuccessful()) { // se comprueba si la request devuelve un código http de éxito (entre 200 y 300)
-                    Gson gson = new Gson(); // definimos un objeto Gson que posteriormente utilizamos
-                    JsonArray data = response.body().getAsJsonArray(); // obtenemos el contenido de la respuesta como un array de elementos Json
-                    Type recetaListType = new TypeToken<List<Receta>>() {}.getType(); /* sintaxis de la biblioteca Gson. Con esta línea estamos
-                                                                                      indicando que lo que obtenemos del Json son recetas
-                                                                                      y que las queremos guardar en una List de Java. */
-                    recetas.addAll(gson.fromJson(data, recetaListType)); // añadimos las recetas a una lista de recetas
-                    for (Receta receta : recetas) { // recorremos la lista de recetas
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    JsonArray data = response.body().getAsJsonArray();
+                    Type recetaListType = new TypeToken<List<Receta>>() {}.getType();
+                    recetas.addAll(gson.fromJson(data, recetaListType));
+                    for (Receta receta : recetas) {
                         Receta r = new Receta(receta.getTitulo(),
                                 receta.getDescripcion(),
                                 receta.getFoto(),
                                 receta.getPasos(),
                                 receta.getIngredientes(),
-                                receta.getTiempoEstimado()); // instanciamos cada una de las recetas
+                                receta.getTiempoEstimado());
 
-                        recetaris.put(r.getTitulo(), r); // introducimos las recetas en el HashMap<String, Receta> previamente definido
+                        recetaris.put(r.getTitulo(), r);
+
                     }
                     pintaRecetas(recetaris, layoutSelec);
                 }
@@ -270,7 +295,7 @@ public class Recetas extends Fragment {
         tvTitulo.setLayoutParams(textLayoutParams);
         tvTitulo.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvTitulo.setTypeface(null, Typeface.BOLD);
-        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
+        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipalBold);
         tvTitulo.setText(r.getTitulo());
 
         TextView tvDesc = new TextView(requireContext());
@@ -280,7 +305,7 @@ public class Recetas extends Fragment {
         tvDesc.setLayoutParams(textLayoutParams_d);
         tvDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvDesc.setTypeface(null, Typeface.NORMAL);
-        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
+        tvDesc.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
         tvDesc.setText(r.getDescripcion());
 
         TextView tvTE= new TextView(requireContext());
@@ -290,7 +315,7 @@ public class Recetas extends Fragment {
         tvTE.setLayoutParams(textLayoutParams_t);
         tvTE.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimensionPixelSize(R.dimen.text_recipe_title_size));
         tvTE.setTypeface(null, Typeface.ITALIC);
-        tvTitulo.setTextAppearance(requireContext(), R.style.EstiloPrincipal);
+        tvTE.setTextAppearance(requireContext(), R.style.EstiloPrincipalItalic);
         tvTE.setText(r.getTiempoEstimado());
 
         linearLayout.addView(imageView);

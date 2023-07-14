@@ -23,4 +23,11 @@
     <string name="creedenciales">¿Has olvidado tus creedenciales?</string>
     <string name="inicio_manual">También puedes iniciar sesión con tu usuario y contraseña:</string>
     <string name="ingrediente_invalildo">Ingrediente no válido</string>
+    <string name="tu_email">Email:</string>
+    <string name="tu_nombre">Nombre:</string>
+    <string name="introduce_ingrediente">Introduce un ingrediente válido</string>
+    <string name="no_recetas">No se encuentran recetas con estos ingredientes</string>
+    <string name="titulo">por nombre</string>
+    <string name="p_ingredientes">por ingredientes</string>
+    <string name="nueva_busqueda">nueva búsqueda</string>
 </resources>

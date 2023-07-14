@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/por_titulo"
+            android:text="@string/titulo"
             style="@style/BotonesPrincipales"/>
 
         <Button
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/por_ingredientes"
+            android:text="@string/p_ingredientes"
             style="@style/BotonesPrincipales"/>
 
     </LinearLayout>
@@ -107,6 +107,8 @@
             android:id="@+id/feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:text="@string/ingrediente_invalildo"
             android:textColor="@color/rojotexto"
             android:visibility="gone"/>
@@ -117,14 +119,31 @@
             android:layout_height="wrap_content"
             android:queryHint="@string/por_ingredientes"/>
 
-        <Button
-            android:id="@+id/btn_anadir"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/aniadir">
+            android:orientation="horizontal">
 
-        </Button>
+            <Button
+                android:id="@+id/btn_anadir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/aniadir">
 
+            </Button>
+
+            <Button
+                android:id="@+id/btn_nueva_consulta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/nueva_busqueda">
+
+            </Button>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
